@@ -53,7 +53,7 @@ class ModbusPDUWriteFileRecordResponseItem(PlcMessage):
         )
 
         # Implicit Field (record_length) (Used for parsing, but its value is not stored as it's implicitly given by the objects content)
-        record_length: int = int(len(self.record_data)) / int(2)
+        record_length: int = len(self.record_data) / 2
         write_buffer.write_unsigned_short(record_length, logical_name="recordLength")
 
         # Array Field (recordData)
@@ -65,12 +65,9 @@ class ModbusPDUWriteFileRecordResponseItem(PlcMessage):
         return int(math.ceil(float(self.get_length_in_bits() / 8.0)))
 
     def get_length_in_bits(self) -> int:
-        length_in_bits: int = 0
         _value: ModbusPDUWriteFileRecordResponseItem = self
 
-        # Simple field (referenceType)
-        length_in_bits += 8
-
+        length_in_bits: int = 0 + 8
         # Simple field (fileNumber)
         length_in_bits += 16
 
@@ -101,7 +98,7 @@ class ModbusPDUWriteFileRecordResponseItem(PlcMessage):
 
         record_length: int = read_implicit_field("recordLength", read_unsigned_int)
 
-        self.record_data = read_buffer.read_byte_array("recordData", int(record_length))
+        self.record_data = read_buffer.read_byte_array("recordData", record_length)
 
         read_buffer.pop_context("ModbusPDUWriteFileRecordResponseItem")
         # Create the instance

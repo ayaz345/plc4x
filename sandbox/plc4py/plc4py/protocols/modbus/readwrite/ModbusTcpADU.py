@@ -57,7 +57,7 @@ class ModbusTcpADU(PlcMessage, ModbusADU):
         )
 
         # Implicit Field (length) (Used for parsing, but its value is not stored as it's implicitly given by the objects content)
-        length: int = self.pdu.getlength_in_bytes(ctx) + int(1)
+        length: int = self.pdu.getlength_in_bytes(ctx) + 1
         write_buffer.write_unsigned_short(length, logical_name="length")
 
         # Simple Field (unitIdentifier)
@@ -126,7 +126,7 @@ class ModbusTcpADU(PlcMessage, ModbusADU):
         self.pdu = read_simple_field(
             "pdu",
             DataReaderComplexDefault(
-                ModbusPDU.static_parse(read_buffer, bool(response)), read_buffer
+                ModbusPDU.static_parse(read_buffer, response), read_buffer
             ),
             WithOption.WithByteOrder(get_bi_g__endian()),
         )

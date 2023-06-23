@@ -46,12 +46,9 @@ class ModbusConstants(PlcMessage):
         return int(math.ceil(float(self.get_length_in_bits() / 8.0)))
 
     def get_length_in_bits(self) -> int:
-        length_in_bits: int = 0
         _value: ModbusConstants = self
 
-        # Const Field (modbusTcpDefaultPort)
-        length_in_bits += 16
-
+        length_in_bits: int = 0 + 16
         return length_in_bits
 
     def static_parse(self, read_buffer: ReadBuffer, args):

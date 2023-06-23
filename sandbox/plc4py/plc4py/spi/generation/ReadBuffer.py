@@ -168,8 +168,7 @@ class ReadBufferByteBased(ReadBuffer):
         return result
 
     def read_byte(self, logical_name: str = "", **kwargs) -> int:
-        value = self.read_signed_byte(8, logical_name, **kwargs)
-        return value
+        return self.read_signed_byte(8, logical_name, **kwargs)
 
     def read_byte_array(
         self, number_of_bytes: int, logical_name: str = "", **kwargs
@@ -283,15 +282,12 @@ class ReadBufferByteBased(ReadBuffer):
         byte_order = kwargs.get("byte_order", self.byte_order)
         if bit_length != 32:
             raise SerializationException("Float can only contain 32 bits")
-        else:
-            endianness: str = ">"
-            if byte_order == ByteOrder.LITTLE_ENDIAN:
-                endianness = "<"
-            result: float = struct.unpack(
-                endianness + "f", self.bb[self.position : bit_length]
-            )[0]
-            self.position += bit_length
-            return result
+        endianness = "<" if byte_order == ByteOrder.LITTLE_ENDIAN else ">"
+        result: float = struct.unpack(
+            f"{endianness}f", self.bb[self.position : bit_length]
+        )[0]
+        self.position += bit_length
+        return result
 
     def read_double(
         self, bit_length: int = 64, logical_name: str = "", **kwargs
@@ -299,12 +295,9 @@ class ReadBufferByteBased(ReadBuffer):
         byte_order = kwargs.get("byte_order", self.byte_order)
         if bit_length != 64:
             raise SerializationException("Double can only contain 64 bits")
-        else:
-            endianness: str = ">"
-            if byte_order == ByteOrder.LITTLE_ENDIAN:
-                endianness = "<"
-            result: float = struct.unpack(
-                endianness + "d", self.bb[self.position : bit_length]
-            )[0]
-            self.position += bit_length
-            return result
+        endianness = "<" if byte_order == ByteOrder.LITTLE_ENDIAN else ">"
+        result: float = struct.unpack(
+            f"{endianness}d", self.bb[self.position : bit_length]
+        )[0]
+        self.position += bit_length
+        return result

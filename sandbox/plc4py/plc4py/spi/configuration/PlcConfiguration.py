@@ -43,17 +43,17 @@ class PlcConfiguration:
         )
         matches = re.search(regex, url)
 
-        self.protocol = matches.group("protocol")
+        self.protocol = matches["protocol"]
 
-        if matches.group("transport") is not None:
-            self.transport = matches.group("transport")
+        if matches["transport"] is not None:
+            self.transport = matches["transport"]
 
-        self.host = matches.group("host")
+        self.host = matches["host"]
 
-        if matches.group("port") is not None:
-            self.port = int(matches.group("port"))
+        if matches["port"] is not None:
+            self.port = int(matches["port"])
 
-        parameters = matches.group("parameters")
+        parameters = matches["parameters"]
         if parameters is not None and parameters != "":
             self.parameters = {
                 item.split("=")[0]: item.split("=")[1]

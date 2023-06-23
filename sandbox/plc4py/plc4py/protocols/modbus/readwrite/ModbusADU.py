@@ -73,7 +73,7 @@ class ModbusADU(ABC, PlcMessage):
             )
         elif args.length != 2:
             raise PlcRuntimeException(
-                "Wrong number of arguments, expected 2, but got " + str(len(args))
+                f"Wrong number of arguments, expected 2, but got {len(args)}"
             )
 
         driverType: DriverType = 0

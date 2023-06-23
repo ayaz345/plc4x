@@ -38,7 +38,7 @@ class ModbusPDUReadFileRecordResponseItem(PlcMessage):
         write_buffer.push_context("ModbusPDUReadFileRecordResponseItem")
 
         # Implicit Field (data_length) (Used for parsing, but its value is not stored as it's implicitly given by the objects content)
-        data_length: int = int(len(self.data)) + int(1)
+        data_length: int = len(self.data) + 1
         write_buffer.write_unsigned_byte(data_length, logical_name="dataLength")
 
         # Simple Field (referenceType)
@@ -55,12 +55,9 @@ class ModbusPDUReadFileRecordResponseItem(PlcMessage):
         return int(math.ceil(float(self.get_length_in_bits() / 8.0)))
 
     def get_length_in_bits(self) -> int:
-        length_in_bits: int = 0
         _value: ModbusPDUReadFileRecordResponseItem = self
 
-        # Implicit Field (dataLength)
-        length_in_bits += 8
-
+        length_in_bits: int = 0 + 8
         # Simple field (referenceType)
         length_in_bits += 8
 
@@ -81,7 +78,7 @@ class ModbusPDUReadFileRecordResponseItem(PlcMessage):
 
         self.reference_type = read_simple_field("referenceType", read_unsigned_short)
 
-        self.data = read_buffer.read_byte_array("data", int(data_length - int(1)))
+        self.data = read_buffer.read_byte_array("data", int(data_length - 1))
 
         read_buffer.pop_context("ModbusPDUReadFileRecordResponseItem")
         # Create the instance

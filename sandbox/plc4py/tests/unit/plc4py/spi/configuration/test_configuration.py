@@ -46,7 +46,7 @@ def test_configuration_standard_no_transport():
         "profibus://localhost:4664&host=localhost&mac=01:02:03:04:05:06"
     )
     assert config.protocol == "profibus"
-    assert config.transport == None
+    assert config.transport is None
     assert config.host == "localhost"
     assert config.port == 4664
     assert config.parameters["host"] == "localhost"
@@ -57,7 +57,7 @@ def test_configuration_standard_second_parameter():
         "profibus://localhost:4664&host=localhost&mac=01:02:03:04:05:06"
     )
     assert config.protocol == "profibus"
-    assert config.transport == None
+    assert config.transport is None
     assert config.host == "localhost"
     assert config.port == 4664
     assert config.parameters["host"] == "localhost"
@@ -69,9 +69,9 @@ def test_configuration_standard_no_port():
         "profibus://localhost&host=localhost&mac=01:02:03:04:05:06"
     )
     assert config.protocol == "profibus"
-    assert config.transport == None
+    assert config.transport is None
     assert config.host == "localhost"
-    assert config.port == None
+    assert config.port is None
     assert config.parameters["host"] == "localhost"
     assert config.parameters["mac"] == "01:02:03:04:05:06"
 
@@ -79,16 +79,16 @@ def test_configuration_standard_no_port():
 def test_configuration_standard_no_parameters():
     config = PlcConfiguration("profibus://localhost")
     assert config.protocol == "profibus"
-    assert config.transport == None
+    assert config.transport is None
     assert config.host == "localhost"
-    assert config.port == None
+    assert config.port is None
     assert config.parameters == {}
 
 
 def test_configuration_standard_no_parameters():
     config = PlcConfiguration("eip://127.0.0.1&test=plc4x")
     assert config.protocol == "eip"
-    assert config.transport == None
+    assert config.transport is None
     assert config.host == "127.0.0.1"
-    assert config.port == None
+    assert config.port is None
     assert config.parameters["test"] == "plc4x"

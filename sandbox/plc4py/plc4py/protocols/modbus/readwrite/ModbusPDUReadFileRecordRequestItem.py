@@ -62,12 +62,9 @@ class ModbusPDUReadFileRecordRequestItem(PlcMessage):
         return int(math.ceil(float(self.get_length_in_bits() / 8.0)))
 
     def get_length_in_bits(self) -> int:
-        length_in_bits: int = 0
         _value: ModbusPDUReadFileRecordRequestItem = self
 
-        # Simple field (referenceType)
-        length_in_bits += 8
-
+        length_in_bits: int = 0 + 8
         # Simple field (fileNumber)
         length_in_bits += 16
 

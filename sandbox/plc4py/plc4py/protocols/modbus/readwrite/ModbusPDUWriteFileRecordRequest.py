@@ -65,9 +65,8 @@ class ModbusPDUWriteFileRecordRequest(PlcMessage, ModbusPDU):
         # Implicit Field (byteCount)
         length_in_bits += 8
 
-        # Array field
-        if self.items != None:
-            for element in self.items:
+        if _value.items != None:
+            for element in _value.items:
                 length_in_bits += element.get_length_in_bits()
 
         return length_in_bits

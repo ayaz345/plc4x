@@ -73,12 +73,9 @@ class ModbusPDU(ABC, PlcMessage):
         return int(math.ceil(float(self.get_length_in_bits() / 8.0)))
 
     def get_length_in_bits(self) -> int:
-        length_in_bits: int = 0
         _value: ModbusPDU = self
 
-        # Discriminator Field (errorFlag)
-        length_in_bits += 1
-
+        length_in_bits: int = 0 + 1
         # Discriminator Field (functionFlag)
         length_in_bits += 7
 
@@ -93,7 +90,7 @@ class ModbusPDU(ABC, PlcMessage):
             )
         elif args.length != 1:
             raise PlcRuntimeException(
-                "Wrong number of arguments, expected 1, but got " + str(len(args))
+                f"Wrong number of arguments, expected 1, but got {len(args)}"
             )
 
         response: bool = False

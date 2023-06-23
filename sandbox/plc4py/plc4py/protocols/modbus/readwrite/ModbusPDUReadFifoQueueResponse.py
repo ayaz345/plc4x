@@ -43,11 +43,11 @@ class ModbusPDUReadFifoQueueResponse(PlcMessage, ModbusPDU):
         write_buffer.push_context("ModbusPDUReadFifoQueueResponse")
 
         # Implicit Field (byte_count) (Used for parsing, but its value is not stored as it's implicitly given by the objects content)
-        byte_count: int = (int(len(self.fifo_value)) * int(2)) + int(2)
+        byte_count: int = len(self.fifo_value) * 2 + 2
         write_buffer.write_unsigned_short(byte_count, logical_name="byteCount")
 
         # Implicit Field (fifo_count) (Used for parsing, but its value is not stored as it's implicitly given by the objects content)
-        fifo_count: int = (int(len(self.fifo_value)) * int(2)) / int(2)
+        fifo_count: int = len(self.fifo_value) * 2 / 2
         write_buffer.write_unsigned_short(fifo_count, logical_name="fifoCount")
 
         # Array Field (fifoValue)

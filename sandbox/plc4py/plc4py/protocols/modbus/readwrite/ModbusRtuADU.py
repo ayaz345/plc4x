@@ -89,7 +89,7 @@ class ModbusRtuADU(PlcMessage, ModbusADU):
         self.pdu = read_simple_field(
             "pdu",
             DataReaderComplexDefault(
-                ModbusPDU.static_parse(read_buffer, bool(response)), read_buffer
+                ModbusPDU.static_parse(read_buffer, response), read_buffer
             ),
             WithOption.WithByteOrder(get_bi_g__endian()),
         )

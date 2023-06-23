@@ -46,7 +46,7 @@ class ModbusPDUGetComEventLogResponse(PlcMessage, ModbusPDU):
         write_buffer.push_context("ModbusPDUGetComEventLogResponse")
 
         # Implicit Field (byte_count) (Used for parsing, but its value is not stored as it's implicitly given by the objects content)
-        byte_count: int = int(len(self.events)) + int(6)
+        byte_count: int = len(self.events) + 6
         write_buffer.write_unsigned_byte(byte_count, logical_name="byteCount")
 
         # Simple Field (status)
@@ -102,7 +102,7 @@ class ModbusPDUGetComEventLogResponse(PlcMessage, ModbusPDU):
 
         self.message_count = read_simple_field("messageCount", read_unsigned_int)
 
-        self.events = read_buffer.read_byte_array("events", int(byte_count - int(6)))
+        self.events = read_buffer.read_byte_array("events", int(byte_count - 6))
 
         read_buffer.pop_context("ModbusPDUGetComEventLogResponse")
         # Create the instance

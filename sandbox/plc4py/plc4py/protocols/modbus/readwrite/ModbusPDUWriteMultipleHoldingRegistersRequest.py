@@ -53,7 +53,7 @@ class ModbusPDUWriteMultipleHoldingRegistersRequest(PlcMessage, ModbusPDU):
         write_buffer.write_unsigned_short(self.quantity, logical_name="quantity")
 
         # Implicit Field (byte_count) (Used for parsing, but its value is not stored as it's implicitly given by the objects content)
-        byte_count: int = int(len(self.value))
+        byte_count: int = len(self.value)
         write_buffer.write_unsigned_byte(byte_count, logical_name="byteCount")
 
         # Array Field (value)
@@ -93,7 +93,7 @@ class ModbusPDUWriteMultipleHoldingRegistersRequest(PlcMessage, ModbusPDU):
 
         byte_count: int = read_implicit_field("byteCount", read_unsigned_short)
 
-        self.value = read_buffer.read_byte_array("value", int(byte_count))
+        self.value = read_buffer.read_byte_array("value", byte_count)
 
         read_buffer.pop_context("ModbusPDUWriteMultipleHoldingRegistersRequest")
         # Create the instance

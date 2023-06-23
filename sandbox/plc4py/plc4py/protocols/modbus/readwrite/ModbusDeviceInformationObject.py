@@ -41,7 +41,7 @@ class ModbusDeviceInformationObject(PlcMessage):
         write_buffer.write_unsigned_byte(self.object_id, logical_name="objectId")
 
         # Implicit Field (object_length) (Used for parsing, but its value is not stored as it's implicitly given by the objects content)
-        object_length: int = int(len(self.data))
+        object_length: int = len(self.data)
         write_buffer.write_unsigned_byte(object_length, logical_name="objectLength")
 
         # Array Field (data)
@@ -53,12 +53,9 @@ class ModbusDeviceInformationObject(PlcMessage):
         return int(math.ceil(float(self.get_length_in_bits() / 8.0)))
 
     def get_length_in_bits(self) -> int:
-        length_in_bits: int = 0
         _value: ModbusDeviceInformationObject = self
 
-        # Simple field (objectId)
-        length_in_bits += 8
-
+        length_in_bits: int = 0 + 8
         # Implicit Field (objectLength)
         length_in_bits += 8
 
@@ -79,7 +76,7 @@ class ModbusDeviceInformationObject(PlcMessage):
 
         object_length: int = read_implicit_field("objectLength", read_unsigned_short)
 
-        self.data = read_buffer.read_byte_array("data", int(object_length))
+        self.data = read_buffer.read_byte_array("data", object_length)
 
         read_buffer.pop_context("ModbusDeviceInformationObject")
         # Create the instance

@@ -95,7 +95,7 @@ class ModbusPDUReadDeviceIdentificationResponse(PlcMessage, ModbusPDU):
         )
 
         # Implicit Field (number_of_objects) (Used for parsing, but its value is not stored as it's implicitly given by the objects content)
-        number_of_objects: int = int(len(self.objects))
+        number_of_objects: int = len(self.objects)
         write_buffer.write_unsigned_byte(
             number_of_objects, logical_name="numberOfObjects"
         )

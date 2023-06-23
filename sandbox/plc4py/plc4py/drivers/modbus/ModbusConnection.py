@@ -57,10 +57,7 @@ class ModbusConnection(PlcConnection):
         Indicates if the connection is established to a remote PLC.
         :return: True if connection, False otherwise
         """
-        if self._transport is not None:
-            return not self._transport.is_closing()
-        else:
-            return False
+        return False if self._transport is None else not self._transport.is_closing()
 
     def close(self) -> None:
         """
